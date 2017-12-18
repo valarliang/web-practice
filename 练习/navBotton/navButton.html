@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>navButton</title>
+</head>
+<style>
+	img,#home{position: fixed;right: 0px;bottom: 0px;}
+	#wrap img{transition: 0.5s;}
+</style>
+<body>
+	<div id="wrap">
+		<img src="prev.png">
+		<img src="open.png">
+		<img src="clos.png">
+		<img src="full.png">
+		<img src="refresh.png">
+	</div>
+	<div id="home"><img src="home.png"></div>
+	<script>
+		var icon=document.getElementById('wrap').children;
+		var home=document.getElementById('home');
+		var angle=90/(icon.length-1);
+		var boolean=true;
+		home.onclick=function (){
+			if (boolean) {
+				this.children[0].style.cssText='transition:1s;transform:rotate(-180deg)';
+				for (var i = 0,l=icon.length; i < l; i++) {
+					icon[i].style.bottom=Math.cos(i*angle*Math.PI/180)*150+'px';
+					icon[i].style.right=Math.sin(i*angle*Math.PI/180)*150+'px';
+					icon[i].style.transform='scale(1) rotate(-720deg)';
+					icon[i].style.transition='0.5s '+i*100+'ms';
+					icon[i].onclick=function () {
+						this.style.transition='0.2s'
+						this.style.transform='scale(2) rotate(-720deg)';
+						this.style.opacity='.3';
+						this.addEventListener('transitionend',end);
+					}
+				}
+			}else{
+				this.children[0].style.cssText='transition:1s;transform:rotate(360deg)';
+				for (var i = 0,l=icon.length; i < l; i++) {
+					icon[i].style.bottom='0px';
+					icon[i].style.right='0px';
+					icon[i].style.transform='scale(1) rotate(0deg)';
+					icon[i].style.transition='0.5s '+(l-i-1)*100+'ms';
+				}
+			}
+			boolean=!boolean;
+		}
+		function end() {
+			this.style.transform='scale(1) rotate(-720deg)';
+			this.style.transition='0.1s';
+			this.style.opacity='1';
+			this.removeEventListener('transitionend',end);
+		}
+	</script>
+</body>
+</html>

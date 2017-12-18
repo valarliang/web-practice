@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		*{margin: 0;padding: 0;}
+		body{width: 100%;height: 100%;background: #333;}
+		#content{position:relative;width: 400px;height:500px;margin: 10px auto;background:url(loader_ico.gif) center no-repeat;}
+		#img{width: 400px;height: 500px;}
+		ul{list-style: none;text-align: center;margin-top: 20px;}
+		li{position:relative;border-radius:10px;width: 20px;height: 20px;background: #B4B4B4;display: inline-block;margin: 6px;}
+		a{position: absolute;height: 500px;width: 30px;font: bold 40px/500px 'microsoft';color:whitesmoke;background: #111;opacity: .3;top:0;text-align: center;}
+		a:hover{opacity:.9;cursor: pointer;}
+		#pre{left: 0;}
+		#next{right: 0;}
+		li img{position: absolute;top:-150px;left:-44px;width: 100px;height: 125px;border:4px solid white;display: none;}
+		.triangle{position: absolute;top:-17px;border-top:8px solid white;border-left: 10px solid transparent;border-right: 10px solid transparent;display: none;}
+	</style>
+</head>
+<body>
+	<div id="content">
+		<img id="img" src="">
+		<a id="pre"><</a>
+		<a id="next">></a>
+	</div>
+	<ul>
+		<!-- <li>
+			<img src=""><div class="triangle"></div>
+		</li> -->
+	</ul>
+	<script>
+		var oPre=document.getElementById('pre'),
+			oNext=document.getElementById('next'),
+			oImg=document.getElementById('img'),
+			oUl=document.getElementsByTagName('ul')[0],
+			oLi=document.getElementsByTagName('li');
+		var arrImg=['1.png','2.png','3.png','4.png'];
+		var strLi='';
+		var count=0;
+		window.onload=function () {
+			oImg.src=arrImg[count];
+			for (var i = 1,al=arrImg.length; i <= al; i++) {
+				strLi+='<li><img src="'+i+'.png"><div class="triangle"></div></li>';
+			}
+			oUl.innerHTML=strLi;
+			for (var i = 0,ol=oLi.length; i < ol; i++) {
+				oLi[i].index=i;
+				oLi[i].onmouseover=function () {
+					this.children[0].style.display='block';
+					this.children[1].style.display='block';
+				}
+				oLi[i].onmouseout=function () {
+					this.children[0].removeAttribute('style');
+					this.children[1].removeAttribute('style');
+				}
+				oLi[i].onclick=function () {
+					oImg.src=arrImg[this.index];
+				}
+			}
+		}
+		oNext.onclick=function () {
+			count++;
+			if (count==arrImg.length) {
+				count=0;
+			}
+			oImg.src=arrImg[count];
+		}
+		oPre.onclick=function () {
+			count--;
+			if (count==-1) {
+				count=arrImg.length-1;
+			}
+			oImg.src=arrImg[count];
+		}
+	</script>
+</body>
+</html>

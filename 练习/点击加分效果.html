@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		*{margin: 0;padding: 0;}
+		body{position:relative;width: 500px;height: 140px;border:1px solid darkgray;margin: 10px auto;}
+		#box{position:relative;width: 490px;height: 40px;border:1px solid black;top: 94px;margin: 0 auto;display: flex;}
+		#background{position:absolute;height: 40px;top: 95px;left:5px;background: #43F5FE;}
+		span{flex: 1;display: inline-block;font: 20px/40px 'Microsoft';text-align: center;}
+	</style>
+</head>
+<body>
+	<div id="background"></div>
+	<div id="box">
+		<span>+1</span>
+	</div>
+	<script>
+		var box=document.getElementById('box'),
+			background=document.getElementById('background'),
+			spans=document.getElementsByTagName('span');
+			str='';
+
+		for (var i = 0; i < 12; i++) {
+			str+='<span>+1</span>';
+		}
+		box.innerHTML=str;
+		box.onclick=function () {
+			animation(background,'width','px',0,490,10,function () {
+				animation(background,'opacity','',1,0,0.05)
+			});
+			sequential(spans);
+			background.removeAttribute('style');
+		}
+
+		function animation(obj,attr,unit,pre,final,dir,endfu) {
+			var num=pre;
+			clearInterval(obj.timer);
+			obj.timer=setInterval(function () {
+				if (pre>final) {
+					num-=dir;
+				}else{
+					num+=dir;
+				}
+				obj.style[attr]=num+unit;
+				if (num==final) {
+					clearInterval(obj.timer);
+					endfu && endfu();
+				}
+			},20)
+		}
+		function animation2(obj) {
+			var num1=0,num2=1;
+			clearInterval(obj.timer);
+			obj.timer=setInterval(function () {
+				num1-=5;
+				num2-=0.05;
+				obj.style.cssText='margin-top:'+num1+'px;opacity:'+num2+';'
+				if (num1==-100) {
+					clearInterval(obj.timer);
+				}
+			},20)
+		}
+		function sequential(obj) {
+			var num=0;
+			clearInterval(obj.timer);
+			obj.timer=setInterval(function () {
+				animation2(obj[num]);
+				num++;
+				if (num==12) {
+					clearInterval(obj.timer);
+				}
+			},100)
+		}
+
+	</script>
+</body>
+</html>

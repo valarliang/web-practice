@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		*{margin: 0;padding: 0;}
+		div{position:relative;width: 850px;height:140px;margin: 10px auto;overflow: hidden;}
+		.sub1{width: 100px;height: 140px;position: absolute;top:0;}
+		.sub2{width: 100px;height: 140px;position: absolute;top:140px;}
+	</style>
+</head>
+<body>
+	<div>
+		<img class="sub1" src="0.JPG" >
+		<img class="sub1" src="0.JPG" >
+		<img class="sub1" src="blank.JPG" >
+		<img class="sub1" src="0.JPG" >
+		<img class="sub1" src="0.JPG" >
+		<img class="sub1" src="blank.JPG" >
+		<img class="sub1" src="0.JPG" >
+		<img class="sub1" src="0.JPG" >
+		<img src="blank.jpg" class="sub2">
+		<img src="blank.jpg" class="sub2">
+		<img src="blank.jpg" class="sub2">
+		<img src="blank.jpg" class="sub2">
+		<img src="blank.jpg" class="sub2">
+		<img src="blank.jpg" class="sub2">
+		<img src="blank.jpg" class="sub2">
+		<img src="blank.jpg" class="sub2" >
+	</div>
+
+	<script>
+		var oImg1=document.getElementsByClassName('sub1');
+		var oImg2=document.getElementsByClassName('sub2');
+		var aTime=new Array;
+		var flag=false;
+		function toTwo(a) {
+			return a<10 ? '0'+a : a;
+		}
+		function fuCswitch(a) {
+			setTimeout(function () {
+				a.src='blank.JPG';
+			},500)
+		}
+		function fuNswitch(a,b,c,d) {
+			var num=0
+			a.timer=setInterval(function () {
+				num-=2;
+				a.style.top=num+'px';
+				b.style.top=140+num+'px';
+				if (num==-140) {
+					clearInterval(a.timer);
+					a.src=c.charAt(d)+'.jpg';
+				}
+			},50/7)
+		}
+		function fuTime() {
+			var	myTime=new Date(),
+				hour=myTime.getHours(),
+				minu=myTime.getMinutes(),
+				sec=myTime.getSeconds(),
+				str=toTwo(hour)+':'+toTwo(minu)+':'+toTwo(sec);
+			for (var i = 0; i < oImg1.length; i++) {
+				if (str.charAt(i)!=':') {
+					if (str.charAt(i)!=aTime[i] && flag) {
+						oImg1[i].src=aTime[i]+'.jpg';
+						oImg2[i].src=str.charAt(i)+'.jpg';
+						fuNswitch(oImg1[i],oImg2[i],str,i)
+					}else{
+						oImg1[i].src=str.charAt(i)+'.jpg';
+					}
+					oImg1[i].style.top='';
+					oImg2[i].style.top='';
+					aTime[i]=str.charAt(i);
+				}else{
+					oImg1[i].src='colon.jpg';
+					fuCswitch(oImg1[i]);
+				}
+			}
+		}
+
+		window.onload=function () {
+			for (var i = 0; i < oImg1.length; i++) {
+				oImg1[i].style.left=104*i+'px';
+				oImg2[i].style.left=104*i+'px';
+			}
+			aTime.length=8;
+			fuTime();
+			flag=true;
+			setInterval(fuTime,1000);
+		}
+	</script>
+</body>
+</html>

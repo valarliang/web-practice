@@ -1,0 +1,23 @@
+*{margin: 0;padding: 0;}
+.t1{margin-left: 15px;float: left;width: 200px;height: 100px;overflow: hidden;}
+img{width: 100px;height: 100px;float: left;}
+h2{font:  bold 16px/25px '宋体';text-overflow:ellipsis;
+	white-space: nowrap;overflow: hidden;}
+p{font: 14px/25px '宋体';color: #666;}
+form{float: right;}
+h1{font: bold 14px/16px 'microsoft yahei';margin-bottom: 15px;}
+label{display:inline-block;width: 60px;font: 12px/20px '宋体';float: left;
+	vertical-align: middle;}
+input{width: 200px;height: 20px;box-sizing: border-box;
+	border: 1px solid #ddd;margin-bottom: 15px;}
+[type=submit]{margin-left: 60px;width: 40px;height: 20px;color: white;
+	background-color: #09F;font: 12px '宋体';border: none;}
+
+table{margin: 0 auto;}
+
+.f2 {font: 12px '宋体';float: left;}
+button{width: 50px;height: 28px;background-color: #eee;border:1px solid #ddd;
+	display: block;}
+select,option{height: 30px;background-color: white;padding: auto 10px;
+	margin-top: 10px;border:1px solid #ddd;}
+option:hover{background-color: #ddd;}

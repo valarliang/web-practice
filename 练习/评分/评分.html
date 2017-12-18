@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		*{margin: 0;padding: 0;}
+		div{width: 500px;height:50px;margin: 0 auto;padding: 10px;}
+		p{float:left;font: 30px/50px 'Microsoft';display: inline-block;}
+		ul{float:left;display: inline-block;height: 50px;}
+		li{float:left;list-style: none;display: inline-block;width: 40px;height: 50px;background: url(1.png) no-repeat center;}
+		span{float:left;font:bold 24px/50px 'Microsoft';color: #FF970F;display: inline-block;height: 50px;margin-left: 10px;}
+	</style>
+</head>
+<body>
+	<div>
+		<p>总体评分:</p>
+		<ul>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>	
+		</ul>
+		<span>点击打分</span>
+	</div>
+	<script>
+		var oLi=document.getElementsByTagName('li');
+		var vText=null,aStyle=[];
+		for (var i = 0,ol=oLi.length; i < ol; i++) {
+			fuGrade(oLi[i],i)
+		}
+		function fuGrade(a,b) {
+			var oText=document.getElementsByTagName('span')[0];
+			var aText=['很差','较差','一般','推荐','力荐'];
+			a.onclick=function () {
+				aStyle=[];
+				for (var i = 0; i < ol; i++) {
+						oLi[i].removeAttribute('style');
+					}
+				if (b<2) {
+					for (var i = 0; i <= b; i++) {
+						oLi[i].style.background='url(3.png) no-repeat center';
+						aStyle.push(oLi[i].style.background);
+					}
+				}else{
+					for (var i = 0; i <= b; i++) {
+						oLi[i].style.background='url(2.png) no-repeat center';
+						aStyle.push(oLi[i].style.background);
+					}
+				}
+				vText=oText.innerHTML=aText[b];
+			}
+			a.onmouseover=function () {
+				for (var i = 0; i < ol; i++) {
+						oLi[i].removeAttribute('style');
+					}
+				if (b<2) {
+					for (var i = 0; i <= b; i++) {
+						oLi[i].style.background='url(3.png) no-repeat center';
+					}
+				}else{
+					for (var i = 0; i <= b; i++) {
+						oLi[i].style.background='url(2.png) no-repeat center';
+					}
+				}
+				oText.innerHTML=aText[b];
+			}
+			a.onmouseout=function () {
+				if (vText) {
+					for (var i = 0; i < ol; i++) {
+						oLi[i].removeAttribute('style');
+					}
+					for (var i = 0; i < aStyle.length; i++) {
+						oLi[i].style.background=aStyle[i];
+					}
+					oText.innerHTML=vText;
+				}else{
+					for (var i = 0; i <= b; i++) {
+						oLi[i].removeAttribute('style');
+						oText.innerHTML='点击打分';
+					}
+				}
+			}
+		}	
+	</script>
+</body>
+</html>

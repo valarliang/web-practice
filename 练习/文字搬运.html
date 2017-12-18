@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		*{margin: 0;padding: 0;}
+		body{position:relative;width: 800px;height: 242px;margin: 10px auto;border: 10px solid #DEDBDB;}
+		#text{position:absolute;width: 310px;height: 200px;border: 1px dotted black;left: 10px;top:10px;font: 16px 'serif';padding: 10px;white-space: pre-wrap;word-break: break-all;}
+		#button{position:absolute;width: 100px;height: 40px;background: #FF8E2C;color:white;font: 16px/40px 'Microsoft';text-align: center;left: 350px;top:10px;border: none;}
+		#button:hover{background: #EA7B3B;}
+		#count{position:absolute;top:60px;left: 50%;transform: translate(-50%,0);}
+		ul{position:absolute;top:90px;left: 50%;transform: translate(-50%,0);opacity: 0;}
+		li{width: 8px;height: 10px;background: #EDD062;list-style: none;display: inline-block;}
+		#display{position:absolute;width: 310px;height: 200px;border: 1px dotted black;background: #65FCF4;right: 10px;top:10px;font: 16px 'serif';padding: 10px;white-space: pre-wrap;word-break: break-all;}
+	</style>
+</head>
+<body>
+	<textarea name="haha" id="text" cols="30" rows="10"></textarea>
+	<input type="button" id="button" value='把文字右移'>
+	<p id="count">0/0</p>
+	<ul>
+		<li></li>
+		<li></li>
+		<li></li>
+		<li></li>
+		<li></li>
+		<li></li>
+		<li></li>
+		<li></li>
+	</ul>
+	<div id="display"></div>
+	<script>
+		var oStr=document.getElementById('text'),
+			oDisplay=document.getElementById('display'),
+			oCount=document.getElementById('count'),
+			oButton=document.getElementById('button'),
+			oLi=document.getElementsByTagName('li'),
+			oUl=document.getElementsByTagName('ul')[0],
+			num=0,
+			last=null;
+			str='';
+		function fuMove() {
+			str+=oStr.value.charAt(0);
+			oStr.value=oStr.value.substring(1);
+			oDisplay.innerHTML=str;
+		}
+		function fuCount(a) {
+			oCount.innerHTML=str.length+'/'+a;
+		}
+		function fuLoading() {
+			if (last) {
+					last.style.background='';
+				}
+				oLi[num%8].style.background='#EA2A2A';
+				last=oLi[num%8];
+				num++;
+		}
+		function fuGradient(a,b,c) {
+			var num=b;
+			a.timer=setInterval(function () {
+				b>c ? num-=0.1 : num+=0.1;
+				a.style.opacity=num;
+				if (num<0 || num>1) {
+					clearInterval(a.timer);
+				}else if(a==oButton && num<0.3){
+					clearInterval(a.timer);
+				}
+			},60)
+		}
+
+		window.onload=function () {
+			oButton.onclick=function () {
+				var oLen=oStr.value.length;
+				str='';
+				if (oStr.value) {
+					oButton.disabled=true;
+					fuGradient(oButton,1,0.2);
+					fuGradient(oUl,0.02,1);
+					oStr.timer=setInterval(function () {
+						fuLoading();
+						fuMove();
+						fuCount(oLen);
+						if (!oStr.value) {
+							fuGradient(oButton,0.2,1);
+							fuGradient(oUl,1,0.02);
+							clearInterval(oStr.timer);
+							oButton.removeAttribute('disabled');
+						}
+					},100);	
+				}else{
+					alert('请输入文字');
+				}
+			}
+		}
+	</script>
+</body>
+</html>

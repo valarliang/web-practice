@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Tips提示</title>
+	<style>
+		*{margin: 0;padding: 0;}
+		#div1{width: 900px;height: 600px;margin: 10px auto;background: url(1.jpg) no-repeat;}
+		#div1 img{width: 208px;height: 56px;margin: 52px 346px;}
+		#div2{width: 624px;height: 340px;border: 3px solid white;border-radius: 10px;margin: 0 auto;position: relative;}
+		h2{text-align: center;color: #ffe588;margin: 37px auto;}
+		#div2 p{font:bold 16px/32px 'serif';padding: 0 52px;color: white;}
+		a{color: #ffe588;}
+		.tips{background: #049ee0;color: white;font: 14px/24px 'serif';border: 2px solid white;max-width: 328px;border-radius: 6px;padding: 14px;position: absolute;text-indent: 2em;opacity: .9;}
+		.foot{color: white;font:bold 14px/24px 'serif';text-align: right;text-indent: 2em;}
+	</style>
+</head>
+<body>
+	<div id="div1">
+		<img src="2.png">
+		<div id="div2">
+			<h2>强台风“鲇鱼”登陆台湾花莲 10省市将迎风雨</h2>
+			<p>今年第17号<a>台风</a>“鲇鱼”今天（27日）14时10分前后以强<a>台风</a>级登陆台湾花莲沿海。台湾多地出现狂风暴雨，20县市停班停课。预计“鲇鱼”将于明天凌晨至上午在福建沿海登陆，10省市有强风雨。<br><a>台风</a></p>
+		</div>
+	</div>
+	<script>
+		var oa=document.getElementsByTagName('a');
+		var div2=document.getElementById('div2');
+		for (var i = 0; i < oa.length; i++) {
+			fuhover(oa[i]);
+		}
+		function fuhover(a) {
+			a.onmouseover=function () {
+				if (odiv=div2.getElementsByClassName('tips')[0]) {
+					clearTimeout(div2.timer);
+					div2.removeChild(odiv);
+				}
+				var odiv=document.createElement('div'),
+					op=document.createElement('p');
+				odiv.innerHTML='台风（Typhoon），指形成于热带或副热带26℃以上广阔海面上的热带气旋。<br/>世界气象组织定义：中心持续风速在12级至13级（即32.7~41.4m/s）的热带气旋为台风（typhoon）或飓风（hurricane）...';
+				op.innerHTML='详细 >>';
+				odiv.className='tips';
+				op.className='foot';
+				odiv.appendChild(op);
+				div2.appendChild(odiv);
+				var left=this.offsetLeft,top=this.offsetTop,height=odiv.offsetHeight,width=odiv.offsetWidth,mheight=getComputedStyle(div2)['height'],mwidth=getComputedStyle(div2)['width'];
+				if (top-height-5<0 && left+width<parseInt(mwidth)) {
+					odiv.style.left=left+'px';
+					odiv.style.top=top+24+'px';
+				}else if (left+width>parseInt(mwidth) && top-height-5>0) {
+					odiv.style.left=left-width+'px';
+					odiv.style.top=top-height-5+'px';
+				}else if (top-height-5<0 && left+width>parseInt(mwidth)) {
+					odiv.style.top=top+24+'px';
+					odiv.style.left=left-width+'px';
+				}else{
+					odiv.style.left=left+'px';
+					odiv.style.top=top-height-5+'px';
+				}
+				odiv.onmouseover=function () {
+					clearTimeout(div2.timer);
+				}
+				odiv.onmouseout=function () {
+					div2.timer=setTimeout(function () {
+						div2.removeChild(odiv);
+					},300)
+				}
+			}
+			a.onmouseout=function () {
+				var odiv=div2.getElementsByClassName('tips')[0];
+				div2.timer=setTimeout(function () {
+					div2.removeChild(odiv);
+				},300)
+			}
+		}
+	</script>
+</body>
+</html>

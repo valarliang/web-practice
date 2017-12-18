@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>表单表格数据操作</title>
+	<style>
+		*{margin: 0;padding: 0;}
+		#body{width: 690px;background: url(1.jpg);margin: 10px auto;padding: 5px;}
+		h1{text-align: center;color: white;margin-top: 20px;}
+		#input{width: 460px;height: 134px;border-radius: 15px;margin: 30px auto;background: white;box-sizing: border-box;padding: 30px;font-size: 16px;text-align: center;}
+		#input input{width: 140px;height: 30px;border:1px solid #19c2ff;border-radius: 15px;margin:0 18px 10px;outline-style: none;font:1em/30px 'Microsoft';text-indent: 1em;color:#19c2ff;}
+		#input input:nth-of-type(2){width: 100px;}
+		#input input:last-of-type{width: 156px;background: linear-gradient(to right,#41c8ff,#46e6fe);color: white;margin-left: 0;box-shadow: 1px 2px 8px #46e6fe;text-indent:none;box-sizing: content-box;letter-spacing: 1em;}
+		select{width: 130px;height: 30px;border:1px solid #19c2ff;border-radius: 15px;margin:0 18px 10px;outline-style: none;font:1em/30px 'Microsoft';text-indent: 1em;color:#19c2ff;box-sizing: content-box;-webkit-appearance:none;background:url(4.png) no-repeat 117px center;padding-right: 10px;}
+		option{font: 20px 'serif';}
+		table{border-collapse: collapse;margin: 30px auto;}
+		tr{width: 460px;height: 32px;border-radius: 3px;background: white;color: #41c8ff;margin: 2px auto;display: block;box-shadow: 0 1px 2px 1px #41c8ff;}
+		#tr1{background: rgba(0,134,139,.3);color: white;}
+		th,td{font: 14px/32px 'serif';width: 70px;text-align: center;}
+		tr:hover{background: rgba(0,134,139,.3);color: white;}
+		table input{vertical-align: middle;margin-right: 4px;}
+		img{vertical-align: middle;margin:0 4px;}
+	</style>
+</head>
+<body>
+	<div id="body">
+		<h1>信息添加与操作</h1>
+		<div id="input">
+			姓名 <input type="text">
+			年龄 <input type="text">
+			性别 <select><option value="男">男</option><option value="女">女</option></select>
+			<input type="button" value="添加">
+		</div>
+		<table>
+			<thead>
+				<tr id="tr1">
+					<th><input type="checkbox">全选</th>
+					<th>ID</th>
+					<th>姓名</th>
+					<th>年龄</th>
+					<th>性别</th>
+					<th>操作<img src="3.png"></th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td><input type="checkbox"></td><td>7</td><td>LEO</td><td>26</td><td>男</td><td><img src="1.png"><img src="2.png"><img src="3.png"></td>
+				</tr>
+				<tr>
+					<td><input type="checkbox"></td><td>27</td><td>ASD</td><td>22</td><td>女</td><td><img src="1.png"><img src="2.png"><img src="3.png"></td>
+				</tr>
+				<tr>
+					<td><input type="checkbox"></td><td>3</td><td>SGD</td><td>27</td><td>男</td><td><img src="1.png"><img src="2.png"><img src="3.png"></td>
+				</tr>
+				<tr>
+					<td><input type="checkbox"></td><td>28</td><td>WER</td><td>24</td><td>男</td><td><img src="1.png"><img src="2.png"><img src="3.png"></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<script>
+		var oinput=document.getElementById('input'),
+			oname=oinput.getElementsByTagName('input')[0],
+			oold=oinput.getElementsByTagName('input')[1],
+			ogender=oinput.getElementsByTagName('select')[0],
+			oadd=oinput.getElementsByTagName('input')[2],
+			otbody=document.getElementsByTagName('tbody')[0],
+			tr1=document.getElementById('tr1'),
+			tr1checkbox=tr1.getElementsByTagName('input')[0],
+			otr=otbody.getElementsByTagName('tr'),
+			oCheckbox=otbody.getElementsByTagName('input'),
+			oID=tr1.getElementsByTagName('th')[1],
+			oyears=tr1.getElementsByTagName('th')[3],
+			oDelete=tr1.getElementsByTagName('img')[0],
+			num=otr.length,
+			a=true,b=true,c=true;
+		function fuSort(num,model) {
+			var arrID=[],arrdata=[];
+			for (var i = 0; i < otr.length; i++) {
+				arrID.push(otr[i].cells[num].innerHTML);
+				arrdata.push(otr[i]);
+			}
+			for (var h = 0; h < otr.length; h++) {
+				otbody.removeChild(otr[1]);
+			}
+			arrID.sort(function (a,b) {
+				if (model) {
+					return parseInt(a) - parseInt(b);
+				}else{
+					return parseInt(b) - parseInt(a);
+				}
+				
+			});
+			for (var j = 0,al=arrID.length; j < al; j++) {
+				for (var k = 0; k < al; k++) {
+					if (arrID[j]==arrdata[k].cells[num].innerHTML) {
+						otbody.appendChild(arrdata[k]);
+					}
+				}
+			}
+		}
+		function fuChecked(a) {
+			var flag=true;
+			if (a.checked) {
+				a.parentNode.parentNode.style.background='#E2E2E2';
+				for (var i = 0; i < oCheckbox.length; i++) {
+					if (!oCheckbox[i].checked) {
+						flag=false;
+					}
+				}
+				if (flag) {
+					tr1checkbox.checked=true;
+				}
+			}else{
+				a.parentNode.parentNode.removeAttribute('style');
+				tr1checkbox.checked=false;
+				c=true;
+			}
+		}
+		function fuMoveup(a) {
+			var b=a.parentNode.parentNode;
+			otbody.insertBefore(b,b.previousElementSibling)
+		}
+		function fuMovedown(a) {
+			var b=a.parentNode.parentNode;
+			if (!b.nextElementSibling) {
+				otbody.insertBefore(b,otbody.firstChild);
+			}else{
+				otbody.insertBefore(b,b.nextElementSibling.nextElementSibling);
+			}
+		}
+		function fuMoveout(a) {
+			var b=a.parentNode.parentNode;
+			otbody.removeChild(b);
+		}
+
+
+		tr1checkbox.onclick=function () {
+			if (c) {
+				for (var i = 0; i < otr.length; i++) {
+					oCheckbox[i].parentNode.parentNode.style.background='#E2E2E2';
+					oCheckbox[i].checked=true;
+				}
+			}else{
+				for (var i = 0; i < otr.length; i++) {
+					oCheckbox[i].checked=false;
+					oCheckbox[i].parentNode.parentNode.removeAttribute('style');
+				}
+			}
+			c=!c;
+		}
+
+		oadd.onclick=function () {
+			if (!oname.value) {
+				alert('请输入姓名');
+			}else if (!oold.value) {
+				alert('请输入年龄');
+			}else if (parseInt(oold.value)!=oold.value || oold.value<=0 || oold.value>140) {
+				alert('请输入正确的年龄值');
+			}else{
+				var ntr=document.createElement('tr');
+				otbody.appendChild(ntr);
+				ntr.innerHTML='<td><input type="checkbox"></td><td>'+(num+1)+'</td><td>'+oname.value+'</td><td>'+oold.value+'</td><td>'+ogender.value+'</td><td><img src="1.png"><img src="2.png"><img src="3.png"></td>';
+				ntr.getElementsByTagName('input')[0].onclick=function () {
+					fuChecked(this);
+				}
+				ntr.getElementsByTagName('img')[0].onclick=function () {
+					fuMoveup(this);
+				}
+				ntr.getElementsByTagName('img')[1].onclick=function () {
+					fuMovedown(this);
+				}
+				ntr.getElementsByTagName('img')[2].onclick=function () {
+					fuMoveout(this);
+				}
+				num++;
+				if (tr1checkbox.checked) {
+					tr1checkbox.checked=false;
+					c=true;
+				} 
+			}
+		}
+
+		window.onload=function () {
+			oID.onclick=function () {
+				fuSort(1,a);
+				a=!a;
+			}
+			oyears.onclick=function () {
+				fuSort(3,b);
+				b=!b;
+			}
+			oDelete.onclick=function () {
+				for (var i = 0; i < otr.length; i++) {
+					if (oCheckbox[i].checked) {
+						otbody.removeChild(otr[i]);
+						i--;
+					}
+					console.log(i,otr.length)
+				}
+			}
+			for (var i = 0; i < otr.length; i++) {
+				oCheckbox[i].onclick=function () {
+					fuChecked(this);
+				}
+				otr[i].getElementsByTagName('img')[0].onclick=function () {
+					fuMoveup(this);
+				}
+				otr[i].getElementsByTagName('img')[1].onclick=function () {
+					fuMovedown(this);
+				}
+				otr[i].getElementsByTagName('img')[2].onclick=function () {
+					fuMoveout(this);
+				}
+			}
+		}
+	</script>
+</body>
+</html>

@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width,user-scalable=no">
+	<title>Document</title>
+	<style>
+		*{ margin: 0; padding: 0; }
+		#header{
+			background: url(img/header.png) no-repeat center/cover;
+		}
+		h2{
+			text-align: center;
+			height: 36px;
+			font: 24px/36px 'serif';
+			color:white;
+		}
+		.time{
+			height: 90px;
+			padding-top: 30px;
+			text-align: center;
+			font:40px/40px 'microsoft';
+		}
+		.time p{
+			font: 16px/20px 'microsoft';
+			color: #738797;
+			display: none;
+		}
+		.boxtitle{
+			width: 100%;
+			height: 30px;
+			text-align: center;
+		}
+		.boxtitle span{
+			float: left;
+			box-sizing: border-box;
+			display: block;
+			height: 100%;
+			width: 50%;
+			color:#828590;
+			font: 14px/30px 'microsoft';
+			border-top:1px solid #e0e7ec;
+		}
+		.boxtitle span:first-of-type{
+			border-right: 1px solid #e0e7ec;
+		}
+		.boxwrap{ 
+			width: 100%; 
+			height: 220px;
+			background:#e7ecf1;
+		}
+		.bg{
+			width: 25%;
+			height: 100%;
+			float: left;
+			-webkit-perspective: 1000px;
+		}
+		#mask{
+			position: absolute;
+			width: 100%;
+			height: 100%;
+			display: none;
+		}
+		.box{ 
+			top:80px;
+			margin: 0 auto;
+			width: 60px; 
+			height: 60px;
+			position: relative; 
+			-webkit-transform-style: preserve-3d; 
+			-webkit-transform-origin: center center -95.40818965243287px;
+		}
+		.box div{ 
+			position: absolute; 
+			top:62px; 
+			-webkit-transform-style: preserve-3d; 
+			-webkit-transform-origin: top;  
+			-webkit-transform: rotateX(-36deg); 
+		}
+		.box>div{ 
+			-webkit-transform: rotateX(0deg);
+			top:0; 
+		}
+		.box span{ 
+			display: block; 
+			width: 58px; 
+			height: 58px; 
+			border: 1px solid whitesmoke; 
+			border-radius: 10px; 
+			background: white; 
+			font: bold 40px/60px '宋体'; 
+			color:#606165;
+			box-shadow: 0 0 4px #dde5ed;
+			text-align: center; 
+		}
+		#footer{
+			width: 200px;
+			margin: 50px auto;
+		}
+		button{
+			padding: 0 20px;
+			height: 42px;
+			color: white;
+			background: #e6778d;
+			border: none;
+			font: 20px/42px 'microsoft';
+		}
+		#footer>button{
+			margin-left: 40px; 
+		}
+		#timing{
+			display: none;
+		}
+		#timing button:last-of-type{
+			margin-left: 40px; 
+		}
+	</style>
+</head>
+<body>
+	<div id="header">
+		<h2>倒计时</h2>
+	</div>
+	<div id="main">
+		<div class="time">
+			<span>0</span><span>0</span>:<span>0</span><span>0</span>
+			<p></p>
+		</div>
+		<div class="boxtitle">
+			<span>Minute</span>
+			<span>Second</span>
+		</div>
+		<div class="boxwrap">
+			<div class="bg"><div class="box"></div></div>
+			<div class="bg"><div class="box"></div></div>
+			<div class="bg"><div class="box"></div></div>
+			<div class="bg"><div class="box"></div></div>
+			<div id="mask"></div>
+		</div>
+	</div>
+	<div id="footer">
+		<button>开始计时</button>
+		<div id="timing">
+			<button>重置</button><button>暂停</button>
+		</div>
+	</div>
+	
+	<script src="./js/datepicker.js"></script>
+</body>
+</html>

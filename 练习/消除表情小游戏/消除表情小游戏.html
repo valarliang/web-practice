@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		*{margin:0;padding: 0;}
+		body{width: 1000px;margin: 10px auto;position: relative;}
+		h2{text-align: center;margin: 10px;margin-left: 60px;}
+		p{text-align: center;margin: 10px;margin-left: 60px;}
+		input{position: relative;left: 50%;transform: translate(-50%,0);margin: 15px;}
+		#grade{width: 120px;border: 2px solid #79A9C8;background: #FBEAD5;display: inline-block;float: left;}
+		#grade p{font: 16px/30px 'Microsoft';margin: 4px;}
+		#div1{width: 780px;height: 440px;border: 2px solid #79A9C8;background: #D5FBD9;display: inline-block;margin-left: -2px;}
+		#div2{position:absolute;width: 780px;height: 440px;border: 2px solid transparent;overflow: hidden;top: 123px;left: 122px;}
+	</style>
+</head>
+<body>
+	<h2>你的鼠标有多快？</h2>
+	<p>游戏说明：点击“开始游戏”，随机掉下QQ表情，点中他，千万别让它掉下去！！</p>
+	<input type="button" value="开始游戏">
+	<div id="content">
+		<div id="grade"><p>得分：<span>0</span>分</p><p>失分：<span>0</span>分</p></div>
+		<div id="div1"></div>
+	</div>
+	<div id="div2"></div>
+	<script>
+		var div2=document.getElementById('div2'),
+			button=document.getElementsByTagName('input')[0],
+			Span=document.getElementsByTagName('span'),
+			content=document.getElementById('content'),
+			count1=1,count2=1;
+			
+		function fuGet() {
+			var x=Math.round(Math.random()*756);
+			var y=Math.ceil(Math.random()*12);
+			div2.innerHTML='<img src="'+y+'.png" style="position:absolute;left:'+x+'px;top:0">';
+		}
+		function fuShake() {
+			var arr=[],num=0;
+			for (var i = 14; i > 0 ; i-=2) {
+				arr.push(i,-i);
+			}
+			clearInterval(content.timer);
+			content.timer=setInterval(function () {
+				content.style.marginTop=arr[num]+'px';
+				num++;
+				if (num==arr.length) {
+					content.style.marginTop=0;
+					clearInterval(content.timer);
+				}
+			},50)
+		}
+		function fuMove(a,b) {
+			var img=div2.getElementsByTagName('img')[0];
+			var num=0;
+			img.timer=setInterval(function () {
+				if (a>24) a=24;
+				if (b<10) b=10;
+				img.style.top=num+'px';
+				num+=a;
+				img.onmousedown=function () {
+					clearInterval(img.timer);
+					img.style.top=0;
+					fuGet();
+					fuMove(a+2,b-5);
+					Span[0].innerHTML=count1;
+					count1++;
+				}
+				if (num>440) {
+					clearInterval(img.timer);
+					img.style.top=0;
+					fuShake();
+					Span[1].innerHTML=count2;
+					count2++;
+					fuGet();
+					fuMove(a,b);
+				}
+				if (count2==11) {
+					div2.innerHTML='';
+					clearInterval(img.timer);
+					button.removeAttribute('disabled');
+					button.value='开始游戏';
+				}
+			},b)
+		}
+
+		window.onload=function () {
+			button.onclick=function () {
+				Span[0].innerHTML=0;
+				Span[1].innerHTML=0;
+				count1=1;count2=1;
+				button.value='游戏进行中...';
+				button.disable=true;
+				fuGet();
+				fuMove(2,80);
+			}
+		}
+	</script>
+</body>
+</html>

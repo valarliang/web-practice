@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		*{margin: 0;padding: 0;}
+		#cbody{width: 550px;margin: 10px auto;border:1px solid black;}
+		h4{background: #5AA83B;color: white;height: 30px;line-height: 30px;padding-left: 20px;}
+		ul{list-style: none;}
+		li{height: 40px;border-bottom: 1px solid #5AA83B;}
+		p{float: left;margin: 0 20px;font:16px/40px 'Microsoft';}
+		.text{float: left;height:24px;margin:6px 20px;font:16px/24px 'Microsoft';}
+		.button1,.button2{float: left;border:none;background: white;color: #5AA83B;font:16px/20px 'Microsoft';height:24px;width:45px;margin-top: 8px}
+		.button1:hover,.button2:hover{background: #5AA83B;color: white;}
+		img{float: left;margin: 11px 0;}
+		.button{display: none;}
+	</style>
+</head>
+<body>
+	<div id="cbody">
+		<ul>
+			<h4>分类名称</h2>
+			<li>
+				<div class="display">
+					<p>something</p>
+					<img src="1.png">
+				</div>
+				<div class="button">
+					<input class="text" type="text">
+					<input class="button1" type="button" value="保存">
+					<input class="button2" type="button" value="取消">
+				</div>
+			</li>
+			<li>
+				<div class="display">
+					<p>something</p>
+					<img src="1.png">
+				</div>
+				<div class="button">
+					<input class="text" type="text">
+					<input class="button1" type="button" value="保存">
+					<input class="button2" type="button" value="取消">
+				</div>
+			</li>
+			<li>
+				<div class="display">
+					<p>something</p>
+					<img src="1.png">
+				</div>
+				<div class="button">
+					<input class="text" type="text">
+					<input class="button1" type="button" value="保存">
+					<input class="button2" type="button" value="取消">
+				</div>
+			</li>
+			<li>
+				<div class="display">
+					<p>something</p>
+					<img src="1.png">
+				</div>
+				<div class="button">
+					<input class="text" type="text">
+					<input class="button1" type="button" value="保存">
+					<input class="button2" type="button" value="取消">
+				</div>
+			</li>
+		</ul>
+	</div>
+	<script>
+		var oLi=document.getElementsByTagName('li');
+		for (var i = 0; i < oLi.length; i++) {
+			fuModify(oLi[i]);
+		}
+		function fuModify(a) {
+			var content=a.getElementsByTagName('p')[0],
+				oImg=a.getElementsByTagName('img')[0],
+				oDisplay=a.getElementsByClassName('display')[0],
+				oButton=a.getElementsByClassName('button')[0],
+				oText=a.getElementsByClassName('text')[0],
+				oButton1=a.getElementsByClassName('button1')[0],
+				oButton2=a.getElementsByClassName('button2')[0];
+			oImg.onclick=function () {
+				oText.value=content.innerHTML;
+				oDisplay.style.display='none';
+				oButton.style.display='block';
+			}
+			oButton1.onclick=function () {
+				content.innerHTML=oText.value;
+				oDisplay.style.display='block';
+				oButton.style.display='none';
+			}
+			oButton2.onclick=function () {
+				oText.value=content.innerHTML;
+				oDisplay.style.display='block';
+				oButton.style.display='none';
+			}
+		}
+	</script>
+</body>
+</html>

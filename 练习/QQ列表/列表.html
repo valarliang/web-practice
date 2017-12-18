@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		*{margin: 0;padding: 0;}
+		#invisible{display: none;}
+		body{width: 250px;height: 400px;margin: 50px auto;border:1px solid black;}
+		h2{background: url(ico1.gif) no-repeat 5px center;padding-left: 18px;border-bottom:1px solid black;line-height: 36px;cursor: pointer;}
+		ul{display: none;}
+		li{border-bottom:1px solid black;padding-left: 18px;list-style: none;cursor: pointer;}
+		h2:hover,li:hover{background-color: #64C8FF;}
+	</style>
+</head>
+<body>
+	<li id="invisible"></li>
+	<div>
+		<h2>我的好友</h2>
+		<ul>
+			<li>张三</li>
+			<li>张三</li>
+			<li>张三</li>
+		</ul>
+	</div>
+	<div>
+		<h2>企业好友</h2>
+		<ul>
+			<li>李四</li>
+			<li>李四</li>
+			<li>李四</li>
+		</ul>
+	</div>
+	<div>
+		<h2>黑名单</h2>
+		<ul>
+			<li>王五</li>
+			<li>王五</li>
+			<li>王五</li>
+		</ul>
+	</div>
+	<script>
+		var oH2=document.getElementsByTagName('h2'),
+			oUl=document.getElementsByTagName('ul'),
+			oLi=document.getElementsByTagName('li'),
+			lastLi=document.getElementById('invisible');
+		for (var i = 0, h=oH2.length; i < h; i++) {
+			oH2[i].index=i;
+			oH2[i].onclick=function () {
+				var num=this.index;
+				if (oUl[num].style.display=='block') {
+					this.style.cssText='';
+					oUl[num].style.cssText='';
+				}else{
+					this.style.background='url(ico2.gif) no-repeat 5px center';
+					oUl[num].style.display='block';
+				}
+			}		
+		}
+
+		for (var i = 0,l=oLi.length; i < l; i++) {
+			oLi[i].onclick=function () {
+				lastLi.style.backgroundColor='';
+				lastLi=this;
+				this.style.backgroundColor='#64C8FF';
+			}
+		}
+	</script>
+</body>
+</html>

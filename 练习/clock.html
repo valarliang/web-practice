@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Clock</title>
+	<style>
+		#wrap{width: 200px;height: 200px;margin: 50px auto;border: 2px solid black;border-radius: 50% 50%;position: relative;}
+		#list{list-style: none;margin: 0;padding: 0;}
+		#list li{left: 99px;top: 0;width: 2px;height: 6px;position: absolute;background-color: #888;transform-origin: 50% 100px;}
+		#list li:nth-of-type(5n+1){height: 12px;background-color: black;}
+		#centre{position: absolute;width:14px;height: 14px;border-radius: 50% 50%;background-color: black;left: 93px;top:93px;}
+		#hour{width: 12px;height: 55px;position: absolute;left: 94px;top: 45px;background-color: black;transform-origin: 50% bottom;border-top-right-radius:6px;border-top-left-radius: 6px; }
+		#min{width: 6px;height: 70px;position: absolute;left: 97px;top: 30px;background-color: black;transform-origin: 50% bottom;border-top-right-radius:3px;border-top-left-radius: 3px;}
+		#sec{width: 2px;height: 85px;position: absolute;left: 99px;top: 15px;background-color: red;transform-origin: 50% bottom;}
+	</style>
+</head>
+<body>
+	<div id="wrap">
+		<ul id="list"></ul>
+		<div id="centre"></div>
+		<div id="hour"></div>
+		<div id="min"></div>
+		<div id="sec"></div>
+	</div>
+	<script>
+		var list=document.getElementById('list');
+		var cDot='';
+		for (var i = 0; i < 60; i++) {
+			cDot+='<li style="transform:rotate('+i*6+'deg);"></li>';
+		}
+		list.innerHTML+=cDot;
+		function toTime() {
+			var date=new Date();
+			var Sec=date.getSeconds();
+			var Min=date.getMinutes()+Sec/60;
+			var Hour=date.getHours()+Min/60;
+			hour.style.transform='rotate('+Hour*30+'deg)';
+			min.style.transform='rotate('+Min*6+'deg)';
+			sec.style.transform='rotate('+Sec*6+'deg)';
+		}
+		setInterval(toTime,1000);
+	</script>
+</body>
+</html>

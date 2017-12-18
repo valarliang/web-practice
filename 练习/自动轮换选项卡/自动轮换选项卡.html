@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>自动轮换选项卡</title>
+	<style>
+		*{margin: 0;padding: 0;}
+		#content{position:relative;width: 400px;height: 210px;margin: 10px auto;border:1px solid black;padding: 10px;}
+		img{width: 310px;height: 180px;background: url(loader_ico.gif) no-repeat center;}
+		span{display: inline-block;cursor: pointer;}
+		#content>span{width: 90px;height: 30px;background: #B3FDFC;text-align: center;font:16px/30px 'Microsoft';}
+		.div span{width: 90px;height: 60px;font: 20px/60px 'serife';text-align: center;}
+		.div span:hover{background:#76BEF5;color:white}
+		.div span:first-of-type{position: absolute;right: 10px;top: 40px;}
+		.div span:nth-of-type(2){position: absolute;right: 10px;top: 100px;}
+		.div span:nth-of-type(3){position: absolute;right: 10px;bottom: 10px;}
+	</style>
+</head>
+<body>
+	<div id="content">
+		<span id="s1">菜单一</span>
+		<span id="s2">菜单二</span>
+		<img src="">
+		<div id="div1" class="div">
+			<span>图片1</span>
+			<span>图片2</span>
+			<span>图片3</span>
+		</div>
+		<div id="div2" class="div">
+			<span>图片4</span>
+			<span>图片5</span>
+			<span>图片6</span>
+		</div>
+	</div>
+	<script>
+		var	s1=document.getElementById('s1'),
+			s2=document.getElementById('s2'),
+			div1=document.getElementById('div1'),
+			div2=document.getElementById('div2'),
+			oDiv1=div1.getElementsByTagName('span'),
+			oDiv2=div2.getElementsByTagName('span'),
+			oSpan=document.getElementsByTagName('span'),
+			aImg=['1.jpg','2.jpg','3.jpg','4.jpg','5.jpg','6.jpg'],
+			oImg=document.getElementsByTagName('img')[0],
+			sub=true,
+			preEl=oDiv1[0],
+			num=1;
+		window.onload=function () {
+			fuS1();
+			fuAutotab();
+		}
+
+		function fuAutotab() {
+			timer=setInterval(function () {
+				if (sub) {
+					s2.removeAttribute('style');
+					s1.style.cssText='background:#10707C;color:white';
+					preEl.removeAttribute('style');
+					oDiv1[num%3].style.cssText='background:#76BEF5;color:white';
+					preEl=oDiv1[num%3];
+					div1.style.display='block';
+					div2.style.display='none';
+				}else{
+					s1.removeAttribute('style');
+					s2.style.cssText='background:#10707C;color:white';
+					preEl.removeAttribute('style');
+					oDiv2[num%3].style.cssText='background:#76BEF5;color:white';
+					preEl=oDiv2[num%3];
+					div2.style.display='block';
+					div1.style.display='none';
+				}
+				if (num%3==2) {sub=!sub;}
+				oImg.src=aImg[num%6];
+				num++;
+			},1500)
+		}
+		function fuS1() {
+			s2.removeAttribute('style');
+			s1.style.cssText='background:#10707C;color:white;';
+			oDiv1[0].style.cssText='background:#76BEF5;color:white';
+			oImg.src=aImg[0];
+			div1.style.display='block';
+			div2.style.display='none';
+			sub=true;
+		}
+		function fuS2() {
+			s1.removeAttribute('style');
+			s2.style.cssText='background:#10707C;color:white;';
+			oDiv2[0].style.cssText='background:#76BEF5;color:white';
+			oImg.src=aImg[3];
+			div2.style.display='block';
+			div1.style.display='none';
+			sub=false;
+		}
+
+		s1.onclick=function () {
+			for (var i = 0; i < oSpan.length; i++) {
+				oSpan[i].removeAttribute('style');
+			}
+			preEl=oDiv1[0];
+			num=1;
+			clearInterval(timer);
+			fuS1();
+			fuAutotab();
+		}
+		s2.onclick=function () {
+			for (var i = 0; i < oSpan.length; i++) {
+				oSpan[i].removeAttribute('style');
+			}
+			preEl=oDiv2[0];
+			num=4;
+			clearInterval(timer);
+			fuS2();
+			fuAutotab();
+		}
+
+		for (var i = 0; i < oDiv1.length; i++) {
+			fuItab(oDiv1[i],i);
+			fuItab(oDiv2[i],i);
+		}
+		function fuItab(a,b) {
+			a.onmouseover=function () {
+				clearInterval(timer);
+				for (var i = 0; i < oSpan.length; i++) {
+					oSpan[i].removeAttribute('style');
+				}
+				if ((num-1)%6<3) {
+					s1.style.cssText='background:#10707C;color:white;';
+					oImg.src=aImg[b];
+				}else{
+					s2.style.cssText='background:#10707C;color:white;';
+					oImg.src=aImg[b+3];
+				}
+			}
+			a.onmouseout=function () {
+				if ((num-1)%6<3) {
+					preEl=oDiv1[0];
+					num=1;
+					fuS1();
+					fuAutotab();
+				}else{
+					preEl=oDiv2[0];
+					num=4;
+					fuS2();
+					fuAutotab();
+				}
+			}
+		}
+	</script>
+</body>
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		*{margin: 0;padding: 0;}
+		ul{width: 600px;height:40px;border:1px solid black;border-radius: 8px;background: linear-gradient(#C9E0FF,#4F6CEF);margin: 10px auto;padding-left: 5px;}
+		li{position: relative;list-style: none;display: inline-block;width: 80px;height: 28px;text-align: center;color: white;font: 16px/28px 'Microsoft';border-radius: 6px;margin: 5px 5px; }
+		li:last-of-type{margin-left: 120px;}
+		li:hover{cursor: pointer;}
+		#content{display: none;}
+		span{position: absolute;top:38px;left:30px;border-bottom: 8px solid #97D4FB;border-left: 10px solid transparent;border-right: 10px solid transparent;}
+		p{position: absolute;top:46px;width:200px;font: 14px/24px 'Microsoft';color: blue;border:1px solid #97D4FB;border-radius: 3px;background:#E7F6FC;}
+		a:hover{text-decoration: underline;}
+	</style>
+</head>
+<body>
+	<ul>
+		<li>首页<div id="content"><span></span><p><a>first</a> | <a>second</a> | <a>third</a> | <a>fourth</a></p></div></li>
+		<li>关于我们<div id="content"><span></span><p><a>first</a> | <a>second</a> | <a>third</a> | <a>fourth</a></p></div></li>
+		<li>作品<div id="content"><span></span><p><a>first</a> | <a>second</a> | <a>third</a> | <a>fourth</a></p></div></li>
+		<li>博客<div id="content"><span></span><p><a>first</a> | <a>second</a> | <a>third</a> | <a>fourth</a></p></div></li>
+		<li>>>更多<div id="content"><span></span><p><a>first</a> | <a>second</a> | <a>third</a> | <a>fourth</a></p></div></li>
+	</ul>
+	<script>
+		var oLi=document.getElementsByTagName('li');
+		var ol=oLi.length;
+		var timer=null;
+		var va=null;
+		for (var i = 0; i < ol; i++) {
+			oLi[i].index=i;
+			fuHover(oLi[i]);
+		}
+		function fuHover(a) {
+			a.onmouseover=function () {
+				if (this.index!=va && va!=null) {
+					oLi[va].children[0].style.display='none';
+					oLi[va].removeAttribute('style');
+				}
+				clearTimeout(timer);
+				a.children[0].style.display='block';
+				a.style.background='rgba(199,216,255,.8)';
+			}
+			a.onmouseout=function () {
+				va=this.index;
+				timer=setTimeout(function () {
+					a.children[0].style.display='none';
+					a.removeAttribute('style');
+				},300)
+			}
+		}
+	</script>
+</body>
+</html>

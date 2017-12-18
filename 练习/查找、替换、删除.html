@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		*{margin: 0;padding: 0;}
+		body{position:relative;width: 800px;margin: 10px auto;background: whitesmoke;}
+		span{display: inline-block;}
+		.highlight{background: yellow;}
+		#content{padding: 15px;margin: 20px;width: 650px;background:white;word-break: break-all;font: font:16px 'serif';}
+		#side{position:absolute;right:10px;top: 0;cursor: default;}
+		.side{width: 80px;height: 40px;background:#D2D2D2;font:16px/40px 'Microsoft';text-align: center;color: white;}
+		.side:hover{background: #FF6D2E;}
+		.side:first-of-type{background: #C0C0C0;}
+		.side:first-of-type:hover{background: #A5A4A4;}
+		#div1{position:relative;border: 12px solid #E84285;width: 490px;height: 110px;margin: 20px auto;background: #F9F5C7;padding: 10px;}
+		#esa{position: absolute;font: bold 20px 'Microsoft';top: 5px;right: 8px;cursor: default;}
+		#title{width: 460px;height: 30px;border-bottom: 3px solid #FF6D2E;margin: 10px auto;}
+		#title span{font: 17px/30px 'Microsoft';width: 80px;text-align: center;cursor: default;}
+		#title span:hover{background: #FF6D2E;color: white;}
+		input{font: 16px/26px 'serif';height: 26px;}
+		.text{width:180px;margin: 12px 0 22px 15px;}
+		.button{width: 40px;margin-left: 10px;}
+		.hidden{display: none;}
+	</style>
+</head>
+<body>
+	<p id="content">One Republic（共和时代或称一体共和）是美国的一个流行摇滚乐队，曲风pop-rock/indie/alternative。乐队成立是2004年科罗拉多州，几个成员都是受Ryan Tedder所影响，贝斯手Meyers，吉他手Filkins、Drew Brown，鼓手EddieFischer。2006年OneRepublic的天使专辑打破哥伦比亚纪录，而Ryan Tedder说"我要让人们喜欢.我不想有人说,'噢,他有一个漂亮的声音。灵魂人物Ryan Tedder从5岁开始就被他的音乐家父亲训练学习钢琴。Ryan希望他们的音乐能够像u2那样给人近似于宗教关怀的感悟，而不仅仅只是觉得主唱嗓音不错。</p>
+	<div id="div1" class="hidden">
+		<span id="esa">X</span>
+		<div id="title">
+			<span id="span1">查找</span><span id="span2">替换</span>
+		</div>
+		<input class="text" type="text">
+		<input class="button" type="button" value="查找">
+		<input class="text hidden" type="text">
+		<input class="text hidden" type="text">
+		<input class="button hidden" type="button" value="替换">
+	</div>
+	<div id="side">
+		<div class="side">展开</div>
+		<div class="side hidden">查找</div>
+		<div class="side hidden">替换</div>
+	</div>
+	<script>
+		var side=document.getElementsByClassName('side'),
+			oinput=document.getElementsByTagName('input'),
+			div1=document.getElementById('div1'),
+			esa=document.getElementById('esa'),
+			content=document.getElementById('content'),
+			span1=document.getElementById('span1'),
+			span2=document.getElementById('span2');
+		function fuDisplay(a) {
+			if (a.innerHTML=='查找') {
+				span1.style.cssText='background: #FF6D2E;color: white;';
+				span2.style.cssText='';
+				oinput[0].style.display='inline-block';
+				oinput[1].style.display='inline-block';
+				oinput[2].style.display='none';
+				oinput[3].style.display='none';
+				oinput[4].style.display='none';
+			}else if (a.innerHTML=='替换') {
+				span2.style.cssText='background: #FF6D2E;color: white;';
+				span1.style.cssText='';
+				oinput[0].style.display='none';
+				oinput[1].style.display='none';
+				oinput[2].style.display='inline-block';
+				oinput[3].style.display='inline-block';
+				oinput[4].style.display='inline-block';
+			}
+		}
+		function fuSearch() {
+			var a=oinput[0].value;
+			if (!a) {
+				alert('请输入要查找的内容');
+			}else if(content.innerHTML.indexOf(a)==-1) {
+				alert('对不起，没有找到您输入的："'+a+'"');
+			}else{
+				content.innerHTML=content.innerHTML.split(a).join('<span class="highlight">'+a+'</span>');
+			}
+		}
+		function fuReplace() {
+			var a=oinput[2].value;
+			var b=oinput[3].value;
+			if (!a) {
+				alert('请输入要替换的内容');
+			}else if(content.innerHTML.indexOf(a)==-1) {
+				alert('对不起，没有找到您输入的："'+a+'"');
+			}else{
+				content.innerHTML=content.innerHTML.split(a).join('<span class="highlight">'+b+'</span>');
+			}
+		}	
+
+		window.onload=function () {
+			side[0].onclick=function () {
+				side[1].className='side';
+				side[2].className='side';
+			}
+			side[1].onclick=function () {
+				side[1].className='side hidden';
+				side[2].className='side hidden';
+				div1.className='';
+				fuDisplay(this);
+			}
+			side[2].onclick=function () {
+				side[1].className='side hidden';
+				side[2].className='side hidden';
+				div1.className='';
+				fuDisplay(this);
+			}
+			span1.onclick=function () {
+				fuDisplay(this);
+			}
+			span2.onclick=function () {
+				fuDisplay(this);
+			}
+			esa.onclick=function () {
+				div1.className='hidden';
+			}
+			oinput[1].onclick=function () {
+				fuSearch();
+			}
+			oinput[4].onclick=function () {
+				fuReplace();
+			}
+		}
+	</script>
+</body>
+</html>
